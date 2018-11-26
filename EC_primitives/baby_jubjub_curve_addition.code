@@ -1,0 +1,10 @@
+import "./baby_jubjub_curve_parameters.code" as params
+
+def main(field u, field v, field x, field y) -> (field, field):
+  //https://en.wikipedia.org/wiki/Twisted_Edwards_curve#Addition_on_twisted_Edwards_curves
+   d, a, gu, gv, zerou, zerov = params()
+
+  field du = (u*y + x*v) / (1 + d * u*v*x*y)
+  field dv = (v*y - a * u*x)/(1 - d * u*v*x*y)
+
+  return du, dv

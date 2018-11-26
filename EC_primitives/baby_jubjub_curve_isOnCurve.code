@@ -1,0 +1,11 @@
+import "./baby_jubjub_curve_parameter_d.code" as dJ
+import "./baby_jubjub_curve_parameter_a.code" as aJ
+
+def main(field u, field v) -> (field):
+  // See appendix 3.3.1 of Zcash protocol specification:
+  // https://github.com/zcash/zips/blob/master/protocol/protocol.pdf
+  field uu = u * u
+  field vv = v * v
+  field uuvv = uu * vv
+  aJ() * uu + vv == 1 + dJ() * uuvv
+  return 1

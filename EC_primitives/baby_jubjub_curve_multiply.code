@@ -1,0 +1,28 @@
+import "./baby_jubjub_curve_addition.code" as add
+import "./baby_jubjub_curve_parameters.code" as params
+import "./baby_jubjub_curve_assert_on_curve.code" as assertOnCurve
+import "../ZoKrates_primitives/isBooleanValue.code" as boolCheck
+
+def main(field h255, field h254, field h253, field h252, field h251, field h250, field h249, field h248, field h247, field h246, field h245, field h244, field h243, field h242, field h241, field h240, field h239, field h238, field h237, field h236, field h235, field h234, field h233, field h232, field h231, field h230, field h229, field h228, field h227, field h226, field h225, field h224, field h223, field h222, field h221, field h220, field h219, field h218, field h217, field h216, field h215, field h214, field h213, field h212, field h211, field h210, field h209, field h208, field h207, field h206, field h205, field h204, field h203, field h202, field h201, field h200, field h199, field h198, field h197, field h196, field h195, field h194, field h193, field h192, field h191, field h190, field h189, field h188, field h187, field h186, field h185, field h184, field h183, field h182, field h181, field h180, field h179, field h178, field h177, field h176, field h175, field h174, field h173, field h172, field h171, field h170, field h169, field h168, field h167, field h166, field h165, field h164, field h163, field h162, field h161, field h160, field h159, field h158, field h157, field h156, field h155, field h154, field h153, field h152, field h151, field h150, field h149, field h148, field h147, field h146, field h145, field h144, field h143, field h142, field h141, field h140, field h139, field h138, field h137, field h136, field h135, field h134, field h133, field h132, field h131, field h130, field h129, field h128, field h127, field h126, field h125, field h124, field h123, field h122, field h121, field h120, field h119, field h118, field h117, field h116, field h115, field h114, field h113, field h112, field h111, field h110, field h109, field h108, field h107, field h106, field h105, field h104, field h103, field h102, field h101, field h100, field h99, field h98, field h97, field h96, field h95, field h94, field h93, field h92, field h91, field h90, field h89, field h88, field h87, field h86, field h85, field h84, field h83, field h82, field h81, field h80, field h79, field h78, field h77, field h76, field h75, field h74, field h73, field h72, field h71, field h70, field h69, field h68, field h67, field h66, field h65, field h64, field h63, field h62, field h61, field h60, field h59, field h58, field h57, field h56, field h55, field h54, field h53, field h52, field h51, field h50, field h49, field h48, field h47, field h46, field h45, field h44, field h43, field h42, field h41, field h40, field h39, field h38, field h37, field h36, field h35, field h34, field h33, field h32, field h31, field h30, field h29, field h28, field h27, field h26, field h25, field h24, field h23, field h22, field h21, field h20, field h19, field h18, field h17, field h16, field h15, field h14, field h13, field h12, field h11, field h10, field h9, field h8, field h7, field h6, field h5, field h4, field h3, field h2, field h1, field h0) -> (field, field):
+  field[256] array = [h0, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96, h97, h98, h99, h100, h101, h102, h103, h104, h105, h106, h107, h108, h109, h110, h111, h112, h113, h114, h115, h116, h117, h118, h119, h120, h121, h122, h123, h124, h125, h126, h127, h128, h129, h130, h131, h132, h133, h134, h135, h136, h137, h138, h139, h140, h141, h142, h143, h144, h145, h146, h147, h148, h149, h150, h151, h152, h153, h154, h155, h156, h157, h158, h159, h160, h161, h162, h163, h164, h165, h166, h167, h168, h169, h170, h171, h172, h173, h174, h175, h176, h177, h178, h179, h180, h181, h182, h183, h184, h185, h186, h187, h188, h189, h190, h191, h192, h193, h194, h195, h196, h197, h198, h199, h200, h201, h202, h203, h204, h205, h206, h207, h208, h209, h210, h211, h212, h213, h214, h215, h216, h217, h218, h219, h220, h221, h222, h223, h224, h225, h226, h227, h228, h229, h230, h231, h232, h233, h234, h235, h236, h237, h238, h239, h240, h241, h242, h243, h244, h245, h246, h247, h248, h249, h250, h251, h252, h253, h254, h255]
+
+  d, a, gu, gv, zerou, zerov = params()
+
+  field du = gu
+  field dv = gv
+  field currentu = zerou
+  field currentv = zerov
+  
+  1 == boolCheck(array[0])
+  currentu = if array[0] == 1 then du else currentu fi
+  currentv = if array[0] == 1 then dv else currentv fi
+  for field i in 1..256 do
+    1 == boolCheck(array[i])
+    du, dv = add(du, dv, du, dv)
+
+    tmpu, tmpv = add(currentu, currentv, du, dv)
+    currentu = if array[i] == 1 then tmpu else currentu fi
+    currentv = if array[i] == 1 then tmpv else currentv fi
+  endfor
+  1 == assertOnCurve(currentu, currentv)
+  return currentu, currentv
