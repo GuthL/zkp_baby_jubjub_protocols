@@ -7,3 +7,5 @@ In test_mul.py, you can choose for a specific k and generator G and get the resu
 
 Work-in-progress: a proof of knowledge of a/multiple private Merkle Tree paths.
 
+Only works with zokrates 0.3.1 and above.
+

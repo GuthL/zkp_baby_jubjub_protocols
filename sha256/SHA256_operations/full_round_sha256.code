@@ -1,0 +1,162 @@
+import "./k_constant_sha256.code" as CONSTANTK
+import "./concatenate.code" as CONCAT
+import "./utils/32/compression_round.code" as COMPRESSIONROUND
+import "./utils/32/extend.code" as EXTEND
+import "./utils/32/add.code" as ADD2
+
+def main(field[256] x, field[256] y, field[32] h0, field[32] h1, field[32] h2, field[32] h3, field[32] h4, field[32] h5, field[32] h6, field[32] h7) -> (field[32], field[32], field[32], field[32], field[32], field[32], field[32], field[32]):
+
+	data = CONCAT(x, y)
+
+	k0, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, k40, k41, k42, k43, k44, k45, k46, k47, k48, k49, k50, k51, k52, k53, k54, k55, k56, k57, k58, k59, k60, k61, k62, k63 = CONSTANTK()
+
+	field[32] w0 = [data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15], data[16], data[17], data[18], data[19], data[20], data[21], data[22], data[23], data[24], data[25], data[26], data[27], data[28], data[29], data[30], data[31]]
+	field[32] w1 = [data[32], data[33], data[34], data[35], data[36], data[37], data[38], data[39], data[40], data[41], data[42], data[43], data[44], data[45], data[46], data[47], data[48], data[49], data[50], data[51], data[52], data[53], data[54], data[55], data[56], data[57], data[58], data[59], data[60], data[61], data[62], data[63]]
+	field[32] w2 = [data[64], data[65], data[66], data[67], data[68], data[69], data[70], data[71], data[72], data[73], data[74], data[75], data[76], data[77], data[78], data[79], data[80], data[81], data[82], data[83], data[84], data[85], data[86], data[87], data[88], data[89], data[90], data[91], data[92], data[93], data[94], data[95]]
+	field[32] w3 = [data[96], data[97], data[98], data[99], data[100], data[101], data[102], data[103], data[104], data[105], data[106], data[107], data[108], data[109], data[110], data[111], data[112], data[113], data[114], data[115], data[116], data[117], data[118], data[119], data[120], data[121], data[122], data[123], data[124], data[125], data[126], data[127]]
+	field[32] w4 = [data[128], data[129], data[130], data[131], data[132], data[133], data[134], data[135], data[136], data[137], data[138], data[139], data[140], data[141], data[142], data[143], data[144], data[145], data[146], data[147], data[148], data[149], data[150], data[151], data[152], data[153], data[154], data[155], data[156], data[157], data[158], data[159]]
+	field[32] w5 = [data[160], data[161], data[162], data[163], data[164], data[165], data[166], data[167], data[168], data[169], data[170], data[171], data[172], data[173], data[174], data[175], data[176], data[177], data[178], data[179], data[180], data[181], data[182], data[183], data[184], data[185], data[186], data[187], data[188], data[189], data[190], data[191]]
+	field[32] w6 = [data[192], data[193], data[194], data[195], data[196], data[197], data[198], data[199], data[200], data[201], data[202], data[203], data[204], data[205], data[206], data[207], data[208], data[209], data[210], data[211], data[212], data[213], data[214], data[215], data[216], data[217], data[218], data[219], data[220], data[221], data[222], data[223]]
+	field[32] w7 = [data[224], data[225], data[226], data[227], data[228], data[229], data[230], data[231], data[232], data[233], data[234], data[235], data[236], data[237], data[238], data[239], data[240], data[241], data[242], data[243], data[244], data[245], data[246], data[247], data[248], data[249], data[250], data[251], data[252], data[253], data[254], data[255]]
+	field[32] w8 = [data[256], data[257], data[258], data[259], data[260], data[261], data[262], data[263], data[264], data[265], data[266], data[267], data[268], data[269], data[270], data[271], data[272], data[273], data[274], data[275], data[276], data[277], data[278], data[279], data[280], data[281], data[282], data[283], data[284], data[285], data[286], data[287]]
+	field[32] w9 = [data[288], data[289], data[290], data[291], data[292], data[293], data[294], data[295], data[296], data[297], data[298], data[299], data[300], data[301], data[302], data[303], data[304], data[305], data[306], data[307], data[308], data[309], data[310], data[311], data[312], data[313], data[314], data[315], data[316], data[317], data[318], data[319]]
+	field[32] w10 = [data[320], data[321], data[322], data[323], data[324], data[325], data[326], data[327], data[328], data[329], data[330], data[331], data[332], data[333], data[334], data[335], data[336], data[337], data[338], data[339], data[340], data[341], data[342], data[343], data[344], data[345], data[346], data[347], data[348], data[349], data[350], data[351]]
+	field[32] w11 = [data[352], data[353], data[354], data[355], data[356], data[357], data[358], data[359], data[360], data[361], data[362], data[363], data[364], data[365], data[366], data[367], data[368], data[369], data[370], data[371], data[372], data[373], data[374], data[375], data[376], data[377], data[378], data[379], data[380], data[381], data[382], data[383]]
+	field[32] w12 = [data[384], data[385], data[386], data[387], data[388], data[389], data[390], data[391], data[392], data[393], data[394], data[395], data[396], data[397], data[398], data[399], data[400], data[401], data[402], data[403], data[404], data[405], data[406], data[407], data[408], data[409], data[410], data[411], data[412], data[413], data[414], data[415]]
+	field[32] w13 = [data[416], data[417], data[418], data[419], data[420], data[421], data[422], data[423], data[424], data[425], data[426], data[427], data[428], data[429], data[430], data[431], data[432], data[433], data[434], data[435], data[436], data[437], data[438], data[439], data[440], data[441], data[442], data[443], data[444], data[445], data[446], data[447]]
+	field[32] w14 = [data[448], data[449], data[450], data[451], data[452], data[453], data[454], data[455], data[456], data[457], data[458], data[459], data[460], data[461], data[462], data[463], data[464], data[465], data[466], data[467], data[468], data[469], data[470], data[471], data[472], data[473], data[474], data[475], data[476], data[477], data[478], data[479]]
+	field[32] w15 = [data[480], data[481], data[482], data[483], data[484], data[485], data[486], data[487], data[488], data[489], data[490], data[491], data[492], data[493], data[494], data[495], data[496], data[497], data[498], data[499], data[500], data[501], data[502], data[503], data[504], data[505], data[506], data[507], data[508], data[509], data[510], data[511]]
+
+	w16 = EXTEND(w1, w14, w0, w9)
+	w17 = EXTEND(w2, w15, w1, w10)
+	w18 = EXTEND(w3, w16, w2, w11)
+	w19 = EXTEND(w4, w17, w3, w12)
+	w20 = EXTEND(w5, w18, w4, w13)
+	w21 = EXTEND(w6, w19, w5, w14)
+	w22 = EXTEND(w7, w20, w6, w15)
+	w23 = EXTEND(w8, w21, w7, w16)
+	w24 = EXTEND(w9, w22, w8, w17)
+	w25 = EXTEND(w10, w23, w9, w18)
+	w26 = EXTEND(w11, w24, w10, w19)
+	w27 = EXTEND(w12, w25, w11, w20)
+	w28 = EXTEND(w13, w26, w12, w21)
+	w29 = EXTEND(w14, w27, w13, w22)
+	w30 = EXTEND(w15, w28, w14, w23)
+	w31 = EXTEND(w16, w29, w15, w24)
+	w32 = EXTEND(w17, w30, w16, w25)
+	w33 = EXTEND(w18, w31, w17, w26)
+	w34 = EXTEND(w19, w32, w18, w27)
+	w35 = EXTEND(w20, w33, w19, w28)
+	w36 = EXTEND(w21, w34, w20, w29)
+	w37 = EXTEND(w22, w35, w21, w30)
+	w38 = EXTEND(w23, w36, w22, w31)
+	w39 = EXTEND(w24, w37, w23, w32)
+	w40 = EXTEND(w25, w38, w24, w33)
+	w41 = EXTEND(w26, w39, w25, w34)
+	w42 = EXTEND(w27, w40, w26, w35)
+	w43 = EXTEND(w28, w41, w27, w36)
+	w44 = EXTEND(w29, w42, w28, w37)
+	w45 = EXTEND(w30, w43, w29, w38)
+	w46 = EXTEND(w31, w44, w30, w39)
+	w47 = EXTEND(w32, w45, w31, w40)
+	w48 = EXTEND(w33, w46, w32, w41)
+	w49 = EXTEND(w34, w47, w33, w42)
+	w50 = EXTEND(w35, w48, w34, w43)
+	w51 = EXTEND(w36, w49, w35, w44)
+	w52 = EXTEND(w37, w50, w36, w45)
+	w53 = EXTEND(w38, w51, w37, w46)
+	w54 = EXTEND(w39, w52, w38, w47)
+	w55 = EXTEND(w40, w53, w39, w48)
+	w56 = EXTEND(w41, w54, w40, w49)
+	w57 = EXTEND(w42, w55, w41, w50)
+	w58 = EXTEND(w43, w56, w42, w51)
+	w59 = EXTEND(w44, w57, w43, w52)
+	w60 = EXTEND(w45, w58, w44, w53)
+	w61 = EXTEND(w46, w59, w45, w54)
+	w62 = EXTEND(w47, w60, w46, w55)
+	w63 = EXTEND(w48, w61, w47, w56)
+
+	field[32] a = h0
+	field[32] b = h1
+	field[32] c = h2
+	field[32] d = h3
+	field[32] e = h4
+	field[32] f = h5
+	field[32] g = h6
+	field[32] h = h7
+
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k0, w0, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k1, w1, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k2, w2, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k3, w3, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k4, w4, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k5, w5, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k6, w6, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k7, w7, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k8, w8, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k9, w9, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k10, w10, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k11, w11, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k12, w12, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k13, w13, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k14, w14, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k15, w15, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k16, w16, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k17, w17, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k18, w18, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k19, w19, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k20, w20, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k21, w21, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k22, w22, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k23, w23, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k24, w24, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k25, w25, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k26, w26, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k27, w27, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k28, w28, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k29, w29, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k30, w30, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k31, w31, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k32, w32, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k33, w33, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k34, w34, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k35, w35, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k36, w36, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k37, w37, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k38, w38, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k39, w39, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k40, w40, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k41, w41, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k42, w42, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k43, w43, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k44, w44, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k45, w45, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k46, w46, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k47, w47, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k48, w48, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k49, w49, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k50, w50, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k51, w51, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k52, w52, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k53, w53, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k54, w54, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k55, w55, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k56, w56, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k57, w57, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k58, w58, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k59, w59, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k60, w60, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k61, w61, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k62, w62, a, b, c, d, e, f, g, h)
+	a, b, c, d, e, f, g, h = COMPRESSIONROUND(k63, w63, a, b, c, d, e, f, g, h)
+
+	h0 = ADD2(h0, a)
+    h1 = ADD2(h1, b)
+    h2 = ADD2(h2, c)
+    h3 = ADD2(h3, d)
+    h4 = ADD2(h4, e)
+    h5 = ADD2(h5, f)
+    h6 = ADD2(h6, g)
+    h7 = ADD2(h7, h)
+
+    return h0, h1, h2, h3, h4, h5, h6, h7

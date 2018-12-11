@@ -1,0 +1,15 @@
+// https://github.com/barryWhiteHat/baby_jubjub_ecc
+import "./EC_primitives/baby_jubjub_curve_multiply.code" as multiply
+import "./EC_primitives/baby_jubjub_curve_assert_on_curve.code" as assertOnCurve
+import "./EC_primitives/baby_jubjub_curve_parameters.code" as parameters
+
+def main(private field[256] exponent, field[2] publicKey) -> (field):
+	field[6] params = parameters()
+
+	1 == assertOnCurve(publicKey, params)
+	kP = multiply(exponent, params)
+
+	publicKey[0] == kP[0]
+	publicKey[1] == kP[1]
+
+	return 1
